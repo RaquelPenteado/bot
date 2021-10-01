@@ -1,0 +1,32 @@
+require('dotenv').config();
+const puppeteer = require('puppeteer');
+
+console.log('Bot rodando!')
+
+async function bot() {
+    const browser = await puppeteer.launch({ headless: false });
+    const page = await browser.newPage();
+    await page.goto('https://twitter.com/i/flow/login');
+
+
+    await page.waitForSelector('input[name="username"]');
+    const email = process.env.EMAIL_USER;
+    await page.$eval('input[name="username"]', (el, value) => el.value = value, email);
+    await page.keyboard.type('.com');
+
+    await page.click('[class="css-901oao r-1awozwy r-jwli3a r-6koalj r-18u37iz r-16y2uox r-37j5jr r-a023e6 r-b88u0q r-1777fci r-rjixqe r-bcqeeo r-q4m81j r-qvutc0"]');
+
+    await page.waitForSelector('input[name="password"]');
+    const pass = process.env.PASS_USER;
+    await page.$eval('input[name="password"]', (el, value) => el.value = value, pass);
+    await page.keyboard.type('3');
+
+    // await page.click('[class="css-901oao r-1awozwy r-jwli3a r-6koalj r-18u37iz r-16y2uox r-37j5jr r-a023e6 r-b88u0q r-1777fci r-rjixqe r-bcqeeo r-q4m81j r-qvutc0"]');
+    console.log('Login efetuado com sucesso!');
+
+    // await browser.close();
+
+    
+  };
+
+  bot();
